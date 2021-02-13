@@ -1,5 +1,5 @@
 use [back of house]
---
+-- falta completar datos para el 22-02 --
 insert into canales(canal) values ('tienda')
 insert into canales(canal) values ('online')
 --
