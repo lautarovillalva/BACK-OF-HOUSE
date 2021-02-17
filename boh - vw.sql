@@ -33,13 +33,33 @@ select top 1 with ties
 		productos.upc,
 		productos.descripcion,
 		ISNULL(SUM(productosXventa.cantidad), 0) as 'cant vendida'
-from productos
-inner join productosXventa on productosXventa.upc=productos.upc
+from productosXventa
+inner join productos on productosXventa.upc=productos.upc
 group by productos.upc, productos.descripcion
-order by [cant vendida]
+order by [cant vendida] desc
 --
 create view vwProductosStockmin
 as
 select *
 from productos
 where productos.stock<=productos.stockMin
+--
+create view vwCantXprecio
+as
+select
+		productosXventa.idVenta,
+		productosXventa.cantidad*productosXventa.precioUnitario as 'p1'
+from productosXventa
+
+create view vwVentasMontoTotal
+as
+select
+		ventas.id,
+		ventas.fecha,
+		ventas.legajoVendedor,
+		ISNULL(sum(vwCantXprecio.p1), 0) as 'monto total'
+from ventas
+inner join vwCantXprecio on ventas.id=vwCantXprecio.idVenta
+group by ventas.id, ventas.fecha, ventas.legajoVendedor
+
+select * from vwVentasMontoTotal

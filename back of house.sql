@@ -81,6 +81,8 @@ upc bigint not null foreign key references productos(upc),
 contenedor int not null check(contenedor>0),
 estante char(1) not null
 )
+alter table grilla
+add primary key (upc, contenedor, estante)
 --
 create table pedidos(
 id bigint not null primary key identity(1,1),
@@ -95,6 +97,8 @@ upc bigint not null foreign key references productos(upc),
 idPedido bigint not null foreign key references pedidos(id),
 cantidad int not null check(cantidad>0)
 )
+alter table productosXpedidos
+add primary key(upc, idPedido)
 --
 create table productosXventa(
 upc bigint not null foreign key references productos(upc),
@@ -104,4 +108,8 @@ precioUnitario money not null
 use [back of house]
 alter table productosXventa
 add  cantidad int not null check(cantidad>0)
+
+--delete from productosXventa where upc='5260' and idVenta='69'
+alter table productosXventa
+add primary key(upc, idVenta)
 
