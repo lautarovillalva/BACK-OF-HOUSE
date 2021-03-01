@@ -12,7 +12,7 @@ insert into grilla(upc, contenedor, estante) values(@upc, @contenedor,@estante)
 end
 --
 
-create procedure spAltaProvedor(
+create procedure spAltaProveedor(
 			@cuit varchar(50),
 			@razonSocial varchar(50),
 			@mail varchar(50),
@@ -24,6 +24,7 @@ begin
 insert into proveedores(cuit, razonSocial, mail, telefono, direccion) values(@cuit, @razonSocial, @mail, @telefono, @direccion)
 end
 --
+exec spAltaProveedor 'spAltaProveedor','prov prueba','provprueba@gmail.com','1534450059','arevalos 123' 
 
 create procedure spAltaVendedor(
 			@legajo bigint,
